@@ -52,7 +52,22 @@
             
            }
      }
-    
+    stage('gryp scan')
+        {
+        steps{
+           script{
+             bat  " docker run --rm -v /var/run/docker.sock:/var/run/docker.sock anchore/grype:latest my-php-app-api -o table > grype_output.txt"
+           }
+        }
+        }
+
+       stage('gryp report'){
+           steps{
+                echo "${env.JENKINS_URL}job/${env.JOB_NAME}/${env.BUILD_NUMBER}/execution/node/3/ws/gryp_output.txt"
+
+    }
+     
+    }
     }
     
    
