@@ -34,29 +34,31 @@
        //    bat 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latestimage -f table my-php-app-api:latest > trivy_table_output_new.txt '     
        // }
        // }
-        stage('syft scan')
-        {
-        steps{
-           script{
-                bat  " docker run --rm -v /var/run/docker.sock:/var/run/docker.sock anchore/syft:latest my-php-app-api -o table > syft_output.txt"
-           }
-        }
-        }
+
+        //--------------------------------------------------------------------------------//    
+    //     stage('syft scan')
+    //     {
+    //     steps{
+    //        script{
+    //             bat  " docker run --rm -v /var/run/docker.sock:/var/run/docker.sock anchore/syft:latest my-php-app-api -o table > syft_output.txt"
+    //        }
+    //     }
+    //     }
 
      
      
-    stage('syft report'){
-           steps{
-                echo "${env.JENKINS_URL}job/${env.JOB_NAME}/${env.BUILD_NUMBER}/execution/node/3/ws/syft_output.txt"
+    // stage('syft report'){
+    //        steps{
+    //             echo "${env.JENKINS_URL}job/${env.JOB_NAME}/${env.BUILD_NUMBER}/execution/node/3/ws/syft_output.txt"
 
             
-           }
-     }
+    //        }
+    //  }
     stage('gryp scan')
         {
         steps{
            script{
-             bat  " docker run --rm -v /var/run/docker.sock:/var/run/docker.sock anchore/grype:latest my-php-app-api -o table "
+             bat  " docker run --rm -v /var/run/docker.sock:/var/run/docker.sock anchore/grype:latest my-php-app-api -o table  > ggsyft_output.txt"
            }
         }
         }
