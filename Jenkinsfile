@@ -56,7 +56,7 @@
         {
         steps{
            script{
-             bat  " docker run --rm -v /var/run/docker.sock:/var/run/docker.sock anchore/grype:latest my-php-app-api -o table > grype_output.txt"
+             bat  " docker run --rm -v /var/run/docker.sock:/var/run/docker.sock anchore/grype:latest my-php-app-api -o table "
            }
         }
         }
