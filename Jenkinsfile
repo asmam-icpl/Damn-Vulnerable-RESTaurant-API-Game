@@ -31,7 +31,7 @@
 
        stage('scan trivy'){
         steps {
-          bat 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image -f table my-php-app-api:latest > trivy_table_output_new.txt '     
+          bat 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image -f table my-php-app-api:latest '     
        }
        }
 
