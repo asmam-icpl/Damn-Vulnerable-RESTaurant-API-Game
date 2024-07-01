@@ -25,6 +25,6 @@ pipeline {
             bat "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image -f table my-php-app:latest > trivy_table_output.txt"
         }
     }
-
+    }
 }
 }
