@@ -54,18 +54,18 @@
             
     //        }
     //  }
-    // stage('gryp scan')
-    //     {
-    //     steps{
-    //        script{
-    //          bat  " docker run --rm -v /var/run/docker.sock:/var/run/docker.sock anchore/grype:latest my-php-app-api -o table > ggsyft_output.txt"
-    //        }
-    //     }
-    //     }
+    stage('gryp scan')
+        {
+        steps{
+           script{
+             bat  " docker run --rm -v /var/run/docker.sock:/var/run/docker.sock anchore/grype:latest my-php-app-api -o table > ggrype_output.txt"
+           }
+        }
+        }
 
        stage('gryp report'){
            steps{
-                echo "${env.JENKINS_URL}job/${env.JOB_NAME}/${env.BUILD_NUMBER}/execution/node/3/ws/ggsyft_output.txt"
+                echo "${env.JENKINS_URL}job/${env.JOB_NAME}/${env.BUILD_NUMBER}/execution/node/3/ws/ggrype_output.txt"
 
     }
      
