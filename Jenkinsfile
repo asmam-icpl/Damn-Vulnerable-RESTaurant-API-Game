@@ -1,13 +1,4 @@
-
-        
-  // stage('SonarQube Analysis') {
-  //   def scannerHome = tool 'SonarScanner';
-  //   withSonarQubeEnv() {
-  //     bat "${scannerHome}/bin/sonar-scanner"
-  //   }
-  // }
-
-    pipeline {
+pipeline {
     agent any
 
     stages {
@@ -29,50 +20,19 @@
             }
         }
 
-       stage('scan trivy'){
-        steps {
-          bat 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image -f table my-php-app-api:latest '     
-       }
-       }
+        stage('Trivy Scan') {
+            steps {
+                script {
+                    echo 'Running Trivy scan...'
+                    bat 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image -f table my-php-app-api:latest > trivy_output.txt'
+                }
+            }
+        }
 
-        //--------------------------------------------------------------------------------//    
-    //     stage('syft scan')
-    //     {
-    //     steps{
-    //        script{
-    //             //bat  " docker run --rm -v /var/run/docker.sock:/var/run/docker.sock anchore/syft:latest my-php-app-api -o table > syft_output.txt"
-    //        }
-    //     }
-    //     }
-
-     
-     
-    // stage('syft report'){
-    //        steps{
-    //             echo "${env.JENKINS_URL}job/${env.JOB_NAME}/${env.BUILD_NUMBER}/execution/node/3/ws/syft_output.txt"
-
-            
-    //        }
-    //  }
-
-    //--------------------------------------------------------------//
-    // stage('gryp scan')
-    //     {
-    //     steps{
-    //        script{
-    //          bat  " docker run --rm -v /var/run/docker.sock:/var/run/docker.sock anchore/grype:latest my-php-app-api -o table > ggrype_output.txt"
-    //        }
-    //     }
-    //     }
-
-    //    stage('gryp report'){
-    //        steps{
-    //             echo "${env.JENKINS_URL}job/${env.JOB_NAME}/${env.BUILD_NUMBER}/execution/node/3/ws/ggrype_output.txt"
-
-    // }
-     
-    // }
+        stage('Archive Trivy Scan Result') {
+            steps {
+                archiveArtifacts artifacts: 'trivy_output.txt', allowEmptyArchive: true
+            }
+        }
     }
-    
-   
 }
